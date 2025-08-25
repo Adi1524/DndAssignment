@@ -93,7 +93,7 @@ const KanbanBoard = () => {
     const newTask = {
       id: generateId(),
       columnId,
-      content: `Task ${tasks.length}`,
+      content: `Task ${tasks.length + 1}`,
     };
     setTasks([...tasks, newTask]);
   };
@@ -129,6 +129,7 @@ const KanbanBoard = () => {
 
     const isActiveTask = active.data.current.type === "tasks";
     const isOverTask = over.data.current.type === "tasks";
+    if (!isActiveTask) return;
 
     // im dropping the task over antother task
     if (isActiveTask && isOverTask) {
@@ -140,6 +141,19 @@ const KanbanBoard = () => {
           tasks[activeIndex].columnId = tasks[overIndex].columnId;
         }
         return arrayMove(tasks, activeIndex, overIndex);
+      });
+    }
+
+    const isOverColumn = over.data?.current.type === "column";
+
+    if (activeTask && isOverColumn) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+        tasks[activeIndex] = {
+          ...tasks[activeIndex],
+          columnId: overId,
+        };
+        return [...tasks];
       });
     }
   };

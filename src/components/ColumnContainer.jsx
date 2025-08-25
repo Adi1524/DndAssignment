@@ -60,7 +60,7 @@ const ColumnContainer = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="flex justify-between items-center rounded-md bg-[#161C22]  px-2 py-1 text-sm">
-                  0
+                  {tasks.length}
                 </div>
                 {editMode ? (
                   <input
